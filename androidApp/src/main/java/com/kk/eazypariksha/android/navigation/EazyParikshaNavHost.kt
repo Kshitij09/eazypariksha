@@ -2,6 +2,8 @@ package com.kk.eazypariksha.android.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
@@ -9,6 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kk.eazypariksha.android.addexam.AddExam
 import com.kk.eazypariksha.android.home.Home
+import com.kk.eazypariksha.android.viewmodel.ViewModelStore
+import com.kk.eazypariksha.android.viewmodel.viewModel
+import com.kk.eazypariksha.di.RepositoryModule
+import com.kk.eazypariksha.stateholder.addexam.AddExamStateHolder
 import com.kk.eazypariksha.ui.StringConstant
 
 interface Destination {
@@ -45,6 +51,11 @@ fun EpNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: Destination = EpRoute.Home
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    // Create a ViewModelStore, which is used to store and cancel ViewModels appropriately.
+    val viewModelStore = remember(coroutineScope) {
+        ViewModelStore(coroutineScope)
+    }
     NavHost(
         navController = navController,
         startDestination = startDestination.absoluteRoute,
@@ -54,9 +65,13 @@ fun EpNavHost(
             SideEffect { setAppTitle(StringConstant.easyPariksha) }
             Home { navController.navigate(it) }
         }
-        destComposable(EpRoute.Home.AddExam) {
+        destComposable(EpRoute.Home.AddExam) { backStackEntry ->
             SideEffect { setAppTitle(StringConstant.addExam) }
-            AddExam()
+            val stateHolder = viewModelStore.viewModel(backStackEntry) { scope ->
+                val repo = RepositoryModule.provideExamRepository()
+                AddExamStateHolder(scope, repo)
+            }
+            AddExam(stateHolder)
         }
     }
 }

@@ -26,6 +26,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                api("org.orbit-mvi:orbit-core:4.3.2")
+                api("io.github.aakira:napier:2.6.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
             }
         }
