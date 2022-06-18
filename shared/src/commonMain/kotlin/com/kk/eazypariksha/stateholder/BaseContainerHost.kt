@@ -12,8 +12,14 @@ val StateHolderCancelTimeout: Long = 5_000L
 
 abstract class BaseContainerHost<S : Any, E : Any>(coroutineScope: CoroutineScope) :
     ContainerHost<S, E> {
+
+    fun stateFlow(): StateFlow<S> = container.stateFlow
+
+    fun sideFlow(): Flow<E> = container.sideEffectFlow
+
     protected abstract val initialState: S
-    open fun onCreate(state: S) {
+
+    protected open fun onCreate(initialState: S) {
         Napier.d("${this::class.simpleName} created")
     }
 
@@ -25,7 +31,4 @@ abstract class BaseContainerHost<S : Any, E : Any>(coroutineScope: CoroutineScop
         )
     }
 
-    fun stateFlow(): StateFlow<S> = container.stateFlow
-
-    fun sideFlow(): Flow<E> = container.sideEffectFlow
 }

@@ -14,13 +14,17 @@ data class AddExamState(
     val isLoading: Boolean = false,
 )
 
-open class AddExamStateHolder(
+abstract class AddExamStateHolder(coroutineScope: CoroutineScope) :
+    BaseContainerHost<AddExamState, Unit>(coroutineScope)
+
+internal class RealAddExamStateHolder(
     coroutineScope: CoroutineScope,
     private val repository: ExamRepository,
-    override val initialState: AddExamState = AddExamState()
-) : BaseContainerHost<AddExamState, Unit>(coroutineScope) {
-    override fun onCreate(state: AddExamState) {
-        super.onCreate(state)
+) : AddExamStateHolder(coroutineScope) {
+    override val initialState = AddExamState()
+
+    override fun onCreate(initialState: AddExamState) {
+        super.onCreate(initialState)
         loadSubjects()
     }
 
