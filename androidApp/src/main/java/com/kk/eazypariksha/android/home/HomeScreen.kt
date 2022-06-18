@@ -19,7 +19,7 @@ import com.kk.eazypariksha.ui.StringConstant
 import com.kk.samplecomposeapp.ui.theme.EazyParikshaTheme
 
 @Composable
-fun Home(
+fun HomeScreen(
     modifier: Modifier = Modifier,
     navigate: (Destination) -> Unit,
 ) {
@@ -85,6 +85,6 @@ fun HomePreview() {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
-        ) { Home {} }
+        ) { HomeScreen {} }
     }
 }

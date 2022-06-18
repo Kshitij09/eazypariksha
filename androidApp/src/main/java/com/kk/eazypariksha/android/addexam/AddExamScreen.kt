@@ -16,7 +16,7 @@ import com.kk.eazypariksha.stateholder.addexam.AddExamStateHolder
 import com.kk.samplecomposeapp.ui.theme.EazyParikshaTheme
 
 @Composable
-fun AddExam(stateHolder: AddExamStateHolder) {
+fun AddExamScreen(stateHolder: AddExamStateHolder) {
     val state by stateHolder.stateFlow().collectAsState()
     Column {
         if (state.isLoading) {
@@ -55,7 +55,7 @@ fun AddExamPreview() {
     val stateHolder = remember { AddExamStateHolder(scope, repo) }
     EazyParikshaTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            AddExam(stateHolder)
+            AddExamScreen(stateHolder)
         }
     }
 }

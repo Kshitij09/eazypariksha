@@ -17,7 +17,7 @@ import com.kk.eazypariksha.ui.StringConstant
 import com.kk.samplecomposeapp.ui.theme.EazyParikshaTheme
 
 @Composable
-fun EpApp() {
+fun EpAppScreen() {
     EazyParikshaTheme {
         val navController = rememberNavController()
         val (title, setAppTitle) = remember { mutableStateOf(StringConstant.easyPariksha) }

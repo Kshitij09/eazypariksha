@@ -9,8 +9,8 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kk.eazypariksha.android.addexam.AddExam
-import com.kk.eazypariksha.android.home.Home
+import com.kk.eazypariksha.android.addexam.AddExamScreen
+import com.kk.eazypariksha.android.home.HomeScreen
 import com.kk.eazypariksha.android.viewmodel.viewModel
 import com.kk.eazypariksha.di.RepositoryModule
 import com.kk.eazypariksha.stateholder.StateHolderStore
@@ -63,7 +63,7 @@ fun EpNavHost(
     ) {
         destComposable(EpRoute.Home) {
             SideEffect { setAppTitle(StringConstant.easyPariksha) }
-            Home { navController.navigate(it) }
+            HomeScreen { navController.navigate(it) }
         }
         destComposable(EpRoute.Home.AddExam) { backStackEntry ->
             SideEffect { setAppTitle(StringConstant.addExam) }
@@ -71,7 +71,7 @@ fun EpNavHost(
                 val repo = RepositoryModule.provideExamRepository()
                 AddExamStateHolder(scope, repo)
             }
-            AddExam(stateHolder)
+            AddExamScreen(stateHolder)
         }
     }
 }
