@@ -1,6 +1,7 @@
 package com.kk.eazypariksha.android
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -13,9 +14,10 @@ import com.kk.samplecomposeapp.ui.theme.EazyParikshaTheme
 fun EpApp() {
     EazyParikshaTheme {
         val navController = rememberNavController()
-        // A surface container using the 'background' color from the theme
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding(),
             color = MaterialTheme.colors.background,
         ) { EpNavHost(navController = navController) }
     }

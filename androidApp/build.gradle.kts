@@ -36,8 +36,7 @@ android {
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
         implementation("com.google.android.material:material:1.6.1")
 
-        val composeVersion = "1.2.0-beta03"
-
+        val composeVersion = "1.2.0-rc01"
         implementation("androidx.activity:activity-compose:1.4.0")
         implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
         implementation("androidx.compose.material:material:1.1.1")
@@ -47,5 +46,8 @@ android {
         implementation("androidx.navigation:navigation-compose:2.4.2")
         implementation("androidx.compose.runtime:runtime:$composeVersion")
         debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+
+        val accompanistVersion = "0.24.11-rc"
+        implementation("com.google.accompanist:accompanist-insets-ui:$accompanistVersion")
     }
 }
