@@ -1,7 +1,8 @@
 package com.kk.eazypariksha.model.exam
 
 data class ExamRequest(
-    val subject: SubjectRequest,
+    val id: Int? = null,
+    val subject: Subject,
     val timestamp: Long,
     val questions: List<QuestionRequest> = emptyList()
 )
