@@ -8,9 +8,10 @@
 import UIKit
 import shared
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     @IBOutlet weak var tableview: UITableView!
+    private let homeList = HomeList.shared.list
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,7 @@ class ViewController: UIViewController {
     
     private func setupUserInterface() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = StringConstant.eazyPariksha
+        title = StringConstant.shared.easyPariksha
         setupTableView()
     }
     
@@ -30,14 +31,14 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        return homeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: HomeCellTableViewCellType = tableview.getCell(withCellType: HomeCellTableViewCell.self, indexPath: indexPath)
-        cell.input.setupData()
+        cell.input.setupData(model: homeList[indexPath.row])
         return cell
     }
 }

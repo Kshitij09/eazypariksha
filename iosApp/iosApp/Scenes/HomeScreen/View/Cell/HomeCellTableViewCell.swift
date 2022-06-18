@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import shared
 
 protocol HomeCellTableViewCellInput {
-    func setupData()
+    func setupData(model: HomeListModel)
 }
 
 protocol HomeCellTableViewCellType: UITableViewCell {
@@ -30,8 +31,8 @@ class HomeCellTableViewCell: UITableViewCell,
     }
     
     /// Use this function to load the data in image and title
-    func setupData() {
-        titleLabel.text = "Hello world"
-        imageview.image = UIImage(systemName: "plus")
+    func setupData(model: HomeListModel) {
+        titleLabel.text = model.title
+        imageview.image = UIImage(systemName: model.image)
     }
 }
