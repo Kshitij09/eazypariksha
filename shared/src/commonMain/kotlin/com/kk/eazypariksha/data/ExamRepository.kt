@@ -1,7 +1,7 @@
 package com.kk.eazypariksha.data
 
-import com.kk.eazypariksha.model.Exam
+import com.kk.eazypariksha.model.exam.ExamRequest
 
 interface ExamRepository {
-    suspend fun create(exam: Exam)
+    suspend fun create(exam: ExamRequest)
 }
