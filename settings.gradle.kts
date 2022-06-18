@@ -6,6 +6,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Eazy_Pariksha"
+rootProject.name = "EazyPariksha"
 include(":androidApp")
 include(":shared")
