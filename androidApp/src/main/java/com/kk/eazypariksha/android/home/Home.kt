@@ -87,7 +87,7 @@ fun ActionRow(
                 text = title,
                 style = MaterialTheme.typography.h4,
                 color = Color.DarkGray,
-                modifier = Modifier.padding(start = 6.dp)
+                modifier = Modifier.padding(start = 10.dp)
             )
         }
         Divider()
