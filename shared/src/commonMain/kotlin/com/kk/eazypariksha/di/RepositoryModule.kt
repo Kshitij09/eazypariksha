@@ -4,5 +4,5 @@ import com.kk.eazypariksha.data.ExamRepository
 import com.kk.eazypariksha.data.InMemoryRepository
 
 object RepositoryModule {
-    fun provideExamRepository(): ExamRepository = InMemoryRepository.getInstance()
+    fun provideExamRepository(): ExamRepository = InMemoryRepository
 }

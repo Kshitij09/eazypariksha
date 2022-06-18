@@ -1,15 +1,14 @@
 package com.kk.eazypariksha.data
 
 import com.kk.eazypariksha.model.exam.*
-import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.locks.SynchronizedObject
-import kotlinx.atomicfu.locks.synchronized
+import kotlin.native.concurrent.ThreadLocal
 
-class InMemoryRepository : ExamRepository, SynchronizedObject() {
+@ThreadLocal
+object InMemoryRepository : ExamRepository {
     private val examDrafts = mutableMapOf<Int, Exam>()
     private val scheduledExams = mutableMapOf<Int, Exam>()
-    private val nextExamId = atomic(1)
-    private val nextQuestionId = atomic(1)
+    private var nextExamId = 1
+    private var nextQuestionId = 1
     private val subjects = listOf(
         Subject(1, "Hindi", "HIN05"),
         Subject(2, "English", "ENG05"),
@@ -20,25 +19,19 @@ class InMemoryRepository : ExamRepository, SynchronizedObject() {
 
     override suspend fun create(examRequest: ExamRequest) {
         check(examRequest.id == null) { "Exam id can't be non-null while creating" }
-        val examId = nextExamId.getAndIncrement()
+        val examId = nextExamId++
         val newExam = examRequest.copy(id = examId).toExam()
-        synchronized(this) {
-            scheduledExams[examId] = newExam
-        }
+        scheduledExams[examId] = newExam
     }
 
     override suspend fun saveDraft(examRequest: ExamRequest) {
         if (examRequest.id == null) {
             // Creating new draft
-            val draftId = nextExamId.getAndIncrement()
+            val draftId = nextExamId++
             val draft = examRequest.copy(id = draftId).toExam()
-            synchronized(this) {
-                examDrafts[draftId] = draft
-            }
+            examDrafts[draftId] = draft
         } else {
-            synchronized(this) {
-                examDrafts[examRequest.id] = examRequest.toExam()
-            }
+            examDrafts[examRequest.id] = examRequest.toExam()
         }
     }
 
@@ -55,7 +48,7 @@ class InMemoryRepository : ExamRepository, SynchronizedObject() {
             id = examId,
             subject = subject,
             timestamp = timestamp,
-            questions = questions.map { it.toQuestion(nextQuestionId.getAndIncrement()) },
+            questions = questions.map { it.toQuestion(nextQuestionId++) },
         )
     }
 
@@ -68,14 +61,4 @@ class InMemoryRepository : ExamRepository, SynchronizedObject() {
 
     private fun OptionRequest.toOption() = Option(label)
 
-    companion object : SynchronizedObject() {
-        private val instance = atomic<InMemoryRepository?>(null)
-        fun getInstance(): ExamRepository {
-            return instance.value ?: synchronized(this) {
-                instance.value ?: InMemoryRepository().also {
-                    instance.value = it
-                }
-            }
-        }
-    }
 }
