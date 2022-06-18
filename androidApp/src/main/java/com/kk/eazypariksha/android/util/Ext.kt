@@ -1,4 +1,4 @@
-package com.kk.eazypariksha.android.viewmodel
+package com.kk.eazypariksha.android.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,10 +13,10 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 /**
  * Retrieve or create a ViewModel.
  */
-internal fun <T : Any> StateHolderStore.viewModelFlow(
+internal fun <T : Any> StateHolderStore.stateHolderFlow(
     navBackStackEntry: NavBackStackEntry,
     create: (scope: CoroutineScope) -> T,
-): StateFlow<T> = viewModelFlow(
+): StateFlow<T> = stateHolderFlow(
     key = navBackStackEntry.id,
     cancellationSignal = {
         // With a NavBackStackEntry, we use it's lifecycle as the signal to
@@ -38,14 +38,14 @@ internal fun <T : Any> StateHolderStore.viewModelFlow(
 )
 
 @Composable
-internal inline fun <T : Any> StateHolderStore.viewModel(
+internal inline fun <T : Any> StateHolderStore.stateHolder(
     key: Any,
     noinline create: (scope: CoroutineScope) -> T,
-): T = viewModelFlow(key, null, create).collectAsState().value
+): T = stateHolderFlow(key, null, create).collectAsState().value
 
 @Composable
-internal inline fun <T : Any> StateHolderStore.viewModel(
+internal inline fun <T : Any> StateHolderStore.stateHolder(
     navBackStackEntry: NavBackStackEntry,
     noinline create: (scope: CoroutineScope) -> T,
-): T = viewModelFlow(navBackStackEntry, create).collectAsState().value
+): T = stateHolderFlow(navBackStackEntry, create).collectAsState().value
 

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.*
 class StateHolderStore(
     coroutineScope: CoroutineScope,
 ) {
-    private val viewModelMap = IsoMutableMap<Any, ViewModelStoreEntry>()
+    private val viewModelMap = IsoMutableMap<Any, StateHolderStoreEntry>()
 
     // Create a copy of the provided CoroutineScope, but replacing the Job with
     // a child SupervisorJob. This allows a ViewModel to be cancelled without affecting any
@@ -21,7 +21,7 @@ class StateHolderStore(
     /**
      * Retrieve or create a ViewModel.
      */
-    fun <T : Any> viewModelFlow(
+    fun <T : Any> stateHolderFlow(
         key: Any,
         cancellationSignal: (suspend () -> Unit)? = null,
         create: (scope: CoroutineScope) -> T,
@@ -72,7 +72,7 @@ class StateHolderStore(
         )
 
         // Store the child scope & flow
-        viewModelMap[key] = ViewModelStoreEntry(
+        viewModelMap[key] = StateHolderStoreEntry(
             coroutineScope = viewModelScope,
             flow = flow,
         )
@@ -89,7 +89,7 @@ class StateHolderStore(
     )
 }
 
-private data class ViewModelStoreEntry(
+private data class StateHolderStoreEntry(
     val coroutineScope: CoroutineScope,
     val flow: StateFlow<Any>,
 ) {

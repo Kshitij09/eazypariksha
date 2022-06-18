@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kk.eazypariksha.android.addexam.AddExamScreen
 import com.kk.eazypariksha.android.home.HomeScreen
-import com.kk.eazypariksha.android.viewmodel.viewModel
+import com.kk.eazypariksha.android.util.stateHolder
 import com.kk.eazypariksha.stateholder.StateHolderFactory
 import com.kk.eazypariksha.stateholder.StateHolderStore
 import com.kk.eazypariksha.ui.StringConstant
@@ -66,8 +66,8 @@ fun EpNavHost(
         }
         destComposable(EpRoute.Home.AddExam) { backStackEntry ->
             SideEffect { setAppTitle(StringConstant.addExam) }
-            val stateHolder = stateHolderStore.viewModel(backStackEntry) { scope ->
-                StateHolderFactory.provideAddExamStateHolder(coroutineScope)
+            val stateHolder = stateHolderStore.stateHolder(backStackEntry) { scope ->
+                StateHolderFactory.provideAddExamStateHolder(scope)
             }
             AddExamScreen(stateHolder)
         }
