@@ -14,8 +14,11 @@ data class AddExamState(
     val isLoading: Boolean = false,
 )
 
-abstract class AddExamStateHolder(coroutineScope: CoroutineScope) :
-    BaseContainerHost<AddExamState, Unit>(coroutineScope)
+abstract class AddExamStateHolder(
+    coroutineScope: CoroutineScope
+) : BaseContainerHost<AddExamState, Unit>(coroutineScope) {
+    open fun setSelectedSubject(index: Int) {}
+}
 
 internal class RealAddExamStateHolder(
     coroutineScope: CoroutineScope,
@@ -33,6 +36,10 @@ internal class RealAddExamStateHolder(
         val subjects = repository.getAllSubjects()
         reduce { state.copy(subjects = subjects) }
         setLoading(false)
+    }
+
+    override fun setSelectedSubject(index: Int) = intent {
+        reduce { state.copy(selectedSubjectIndex = index) }
     }
 
     private suspend fun SimpleSyntax<AddExamState, Unit>.setLoading(loading: Boolean) {

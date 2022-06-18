@@ -8,7 +8,7 @@ import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.container
 
-val StateHolderCancelTimeout: Long = 5_000L
+const val StateHolderCancelTimeout: Long = 5_000L
 
 abstract class BaseContainerHost<S : Any, E : Any>(coroutineScope: CoroutineScope) :
     ContainerHost<S, E> {
