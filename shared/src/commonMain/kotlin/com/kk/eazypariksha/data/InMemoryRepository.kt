@@ -1,5 +1,6 @@
 package com.kk.eazypariksha.data
 
+import com.kk.eazypariksha.model.FakeData
 import com.kk.eazypariksha.model.exam.*
 import kotlin.native.concurrent.ThreadLocal
 
@@ -9,13 +10,7 @@ object InMemoryRepository : ExamRepository {
     private val scheduledExams = mutableMapOf<Int, Exam>()
     private var nextExamId = 1
     private var nextQuestionId = 1
-    private val subjects = listOf(
-        Subject(1, "Hindi", "HIN05"),
-        Subject(2, "English", "ENG05"),
-        Subject(3, "Science", "SCI05"),
-        Subject(4, "Mathematics", "MAT05"),
-        Subject(5, "Social Science", "SOC05"),
-    )
+    private val subjects = FakeData.subjects
 
     override suspend fun create(examRequest: ExamRequest) {
         check(examRequest.id == null) { "Exam id can't be non-null while creating" }
