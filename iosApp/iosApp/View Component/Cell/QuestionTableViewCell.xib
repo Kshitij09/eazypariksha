@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestionTableViewCell" rowHeight="62" id="KGk-i7-Jjw" customClass="QuestionTableViewCell" customModule="iosApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="62"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="335" height="62"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="6Zo-MV-E99">
+                        <rect key="frame" x="0.0" y="12" width="335" height="34"/>
+                        <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wJv-BE-fsx">
+                                <rect key="frame" x="0.0" y="0.5" width="36" height="33"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="CJZ-bp-OVc"/>
+                                    <constraint firstAttribute="width" constant="36" id="sFF-eJ-PS5"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="option " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WgN-5X-vQg">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6Zo-MV-E99" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="9fI-Y4-Z57"/>
+                    <constraint firstAttribute="trailing" secondItem="6Zo-MV-E99" secondAttribute="trailing" id="B5f-OR-jB5"/>
+                    <constraint firstAttribute="bottom" secondItem="6Zo-MV-E99" secondAttribute="bottom" constant="12" id="WQy-vH-atc"/>
+                    <constraint firstItem="6Zo-MV-E99" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ZjZ-id-SvC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="imageview" destination="wJv-BE-fsx" id="J5M-Yx-OvV"/>
+                <outlet property="textfield" destination="WgN-5X-vQg" id="nCE-fb-HKc"/>
+            </connections>
+            <point key="canvasLocation" x="148.55072463768118" y="74.330357142857139"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

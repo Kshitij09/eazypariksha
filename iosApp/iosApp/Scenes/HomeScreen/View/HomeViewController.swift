@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
     private func setupTableView() {
         tableview.registerNib(withCellType: HomeCellTableViewCell.self)
         tableview.dataSource = self
+        tableview.delegate = self
     }
 }
 
@@ -43,3 +44,8 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushController(with: homeList[indexPath.row].type)
+    }
+}
