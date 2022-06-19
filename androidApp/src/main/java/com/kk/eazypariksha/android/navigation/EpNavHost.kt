@@ -99,7 +99,11 @@ fun EpNavHost(
                 AddQuestionScreen(
                     stateHolder = stateHolder,
                     navigateUp = navController::navigateUp,
-                    onNext = { }
+                    onDone = {
+                        navController.navigate(EpRoute.Home) {
+                            popUpTo(EpRoute.Home.absoluteRoute)
+                        }
+                    }
                 )
             }
         }
@@ -114,6 +118,11 @@ internal fun NavController.navigate(
 ) {
     navigate(destination.absoluteRoute, navOptions, navigatorExtras)
 }
+
+internal fun NavController.navigate(
+    destination: Destination,
+    builder: NavOptionsBuilder.() -> Unit
+) = navigate(destination.absoluteRoute, builder)
 
 internal fun NavGraphBuilder.destComposable(
     destination: Destination,

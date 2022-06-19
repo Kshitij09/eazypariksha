@@ -31,6 +31,8 @@ abstract class AddExamStateHolder(
     open fun setSelectedSubject(index: Int) {}
     open fun setDateTime(dateTime: LocalDateTime) {}
     open fun saveDraft() {}
+    open fun submitExam() {}
+    open fun saveQuestion() {}
 }
 
 interface FeedbackEffect {
@@ -80,10 +82,18 @@ internal class RealAddExamStateHolder(
             postSideEffect(AddExamEffects.DateTimeNotSet(StringConstant.dateTimeNotSet))
             return@intent
         }*/
-        val request =
-            ExamRequest(state.examId, state.selectedSubject, state.dateTime, state.questions)
+        val request = ExamRequest(
+            state.examId,
+            state.selectedSubject,
+            state.dateTime,
+            state.questions
+        )
         repository.saveDraft(request)
         postSideEffect(AddExamEffects.DraftSaved(StringConstant.draftSaved))
+    }
+
+    override fun saveQuestion() = intent {
+
     }
 
     private suspend fun SimpleSyntax<AddExamState, AddExamEffects>.setLoading(loading: Boolean) {

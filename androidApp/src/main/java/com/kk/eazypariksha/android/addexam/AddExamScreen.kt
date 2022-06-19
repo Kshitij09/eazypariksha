@@ -19,7 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
-import com.kk.eazypariksha.android.common.SaveAndNextFooter
+import com.kk.eazypariksha.android.common.SectionLabel
+import com.kk.eazypariksha.android.common.TwoActionFooter
 import com.kk.eazypariksha.model.FakeData
 import com.kk.eazypariksha.model.exam.Subject
 import com.kk.eazypariksha.stateholder.addexam.AddExamEffects
@@ -78,12 +79,12 @@ fun AddExamScreen(
             )
         }
 
-        SaveAndNextFooter(
-            onSave = {
+        TwoActionFooter(
+            onLeft = {
                 stateHolder.saveDraft()
                 navigateUp()
             },
-            onNext = onNext
+            onRight = onNext
         )
     }
 
@@ -137,17 +138,6 @@ fun PlaceholderCard(
             )
         }
     }
-}
-
-
-@Composable
-fun SectionLabel(label: String, modifier: Modifier = Modifier) {
-    Text(
-        text = label,
-        color = LocalContentColor.current.copy(alpha = 0.6f),
-        style = MaterialTheme.typography.h5,
-        modifier = modifier
-    )
 }
 
 @Composable
