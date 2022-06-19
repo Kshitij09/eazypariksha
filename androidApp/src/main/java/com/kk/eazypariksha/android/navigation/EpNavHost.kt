@@ -1,5 +1,6 @@
 package com.kk.eazypariksha.android.navigation
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
@@ -45,8 +46,9 @@ object EpRoute {
 
 @Composable
 fun EpNavHost(
-    modifier: Modifier = Modifier,
+    scaffoldState: ScaffoldState,
     setAppTitle: (String) -> Unit,
+    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: Destination = EpRoute.Home
 ) {
@@ -69,7 +71,7 @@ fun EpNavHost(
             val stateHolder = stateHolderStore.stateHolder(backStackEntry) { scope ->
                 StateHolderFactory.provideAddExamStateHolder(scope)
             }
-            AddExamScreen(stateHolder)
+            AddExamScreen(scaffoldState, stateHolder, navController::navigateUp)
         }
     }
 }

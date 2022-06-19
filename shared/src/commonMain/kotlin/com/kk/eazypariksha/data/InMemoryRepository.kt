@@ -2,11 +2,12 @@ package com.kk.eazypariksha.data
 
 import com.kk.eazypariksha.model.FakeData
 import com.kk.eazypariksha.model.exam.*
+import io.github.aakira.napier.Napier
 import kotlin.native.concurrent.ThreadLocal
 
 @ThreadLocal
 object InMemoryRepository : ExamRepository {
-    private val examDrafts = mutableMapOf<Int, Exam>()
+    private val examDrafts = mutableMapOf<Int, ExamRequest>()
     private val scheduledExams = mutableMapOf<Int, Exam>()
     private var nextExamId = 1
     private var nextQuestionId = 1
@@ -23,26 +24,29 @@ object InMemoryRepository : ExamRepository {
         if (examRequest.id == null) {
             // Creating new draft
             val draftId = nextExamId++
-            val draft = examRequest.copy(id = draftId).toExam()
+            val draft = examRequest.copy(id = draftId)
             examDrafts[draftId] = draft
         } else {
-            examDrafts[examRequest.id] = examRequest.toExam()
+            examDrafts[examRequest.id] = examRequest
         }
+        Napier.d("Currently ${examDrafts.size} drafts are in memory")
     }
 
     override suspend fun getOngoing(): List<Exam> = scheduledExams.values.toList()
 
-    override suspend fun getDrafts(): List<Exam> = examDrafts.values.toList()
+    override suspend fun getDrafts(): List<ExamRequest> = examDrafts.values.toList()
 
 
     override suspend fun getAllSubjects(): List<Subject> = subjects
 
     private fun ExamRequest.toExam(): Exam {
-        val examId = id ?: error("Tried creating exam with id=null")
+        id ?: error("exam id can't be null")
+        subject ?: error("exam subject can't be null")
+        dateTime ?: error("exam date & time can't be null")
         return Exam(
-            id = examId,
+            id = id,
             subject = subject,
-            timestamp = timestamp,
+            dateTime = dateTime,
             questions = questions.map { it.toQuestion(nextQuestionId++) },
         )
     }

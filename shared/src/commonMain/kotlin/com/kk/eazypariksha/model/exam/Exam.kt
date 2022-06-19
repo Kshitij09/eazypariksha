@@ -1,9 +1,11 @@
 package com.kk.eazypariksha.model.exam
 
+import kotlinx.datetime.LocalDateTime
+
 data class Exam(
     val id: Int,
     val subject: Subject,
-    val timestamp: Long,
+    val dateTime: LocalDateTime,
     val questions: List<Question> = emptyList()
 )
 

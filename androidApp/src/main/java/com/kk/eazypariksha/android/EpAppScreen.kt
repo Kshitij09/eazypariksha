@@ -1,10 +1,7 @@
 package com.kk.eazypariksha.android
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +18,7 @@ fun EpAppScreen() {
     EazyParikshaTheme {
         val navController = rememberNavController()
         val (title, setAppTitle) = remember { mutableStateOf(StringConstant.easyPariksha) }
+        val scaffoldState = rememberScaffoldState()
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -28,6 +26,7 @@ fun EpAppScreen() {
             color = MaterialTheme.colors.background
         ) {
             Scaffold(
+                scaffoldState = scaffoldState,
                 topBar = {
                     Surface(
                         color = MaterialTheme.colors.primary,
@@ -51,6 +50,7 @@ fun EpAppScreen() {
                 contentColor = MaterialTheme.colors.onBackground,
             ) { paddingValues ->
                 EpNavHost(
+                    scaffoldState = scaffoldState,
                     navController = navController,
                     setAppTitle = setAppTitle,
                     modifier = Modifier.padding(paddingValues)

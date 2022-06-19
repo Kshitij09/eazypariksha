@@ -24,6 +24,11 @@ android {
         kotlinCompilerExtensionVersion = "1.1.1"
     }
 
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -31,6 +36,7 @@ android {
     }
 
     dependencies {
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
         implementation(project(":shared"))
         implementation("androidx.core:core-ktx:1.8.0")
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
@@ -49,5 +55,7 @@ android {
 
         val accompanistVersion = "0.24.11-rc"
         implementation("com.google.accompanist:accompanist-insets-ui:$accompanistVersion")
+
+        implementation("com.afollestad.material-dialogs:datetime:3.3.0")
     }
 }

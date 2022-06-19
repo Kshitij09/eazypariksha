@@ -7,4 +7,7 @@ object StringConstant {
     const val upcomingExams = "Upcoming Exams"
     const val results = "Results"
     const val browseStudents = "Browse Students"
+    const val subjectNotSelected = "Please select the subject"
+    const val dateTimeNotSet = "Please select the date & time"
+    const val draftSaved = "Draft Saved!"
 }
