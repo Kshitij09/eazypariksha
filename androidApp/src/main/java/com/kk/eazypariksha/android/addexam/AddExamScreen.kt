@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
+import com.kk.eazypariksha.android.common.SaveAndNextFooter
 import com.kk.eazypariksha.model.FakeData
 import com.kk.eazypariksha.model.exam.Subject
 import com.kk.eazypariksha.stateholder.addexam.AddExamEffects
@@ -37,7 +37,8 @@ import java.util.*
 fun AddExamScreen(
     scaffoldState: ScaffoldState,
     stateHolder: AddExamStateHolder,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    onNext: () -> Unit
 ) {
     val state by stateHolder.stateFlow().collectAsState()
     val subjectPickerEnabled by derivedStateOf { state.subjects.isNotEmpty() }
@@ -77,38 +78,13 @@ fun AddExamScreen(
             )
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-        ) {
-            TextButton(
-                onClick = { stateHolder.saveDraft() },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(vertical = 4.dp)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = rememberVectorPainter(image = Icons.Default.Save),
-                        contentDescription = null
-                    )
-                    Text(text = "Save")
-                }
-            }
-
-            TextButton(
-                onClick = { },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(vertical = 4.dp)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "Next")
-                }
-            }
-        }
+        SaveAndNextFooter(
+            onSave = {
+                stateHolder.saveDraft()
+                navigateUp()
+            },
+            onNext = onNext
+        )
     }
 
     DisposableEffect(key1 = stateHolder) {
@@ -216,7 +192,7 @@ fun AddExamPreview() {
 
     EazyParikshaTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            AddExamScreen(scaffoldState, stateHolder) {}
+            AddExamScreen(scaffoldState, stateHolder, {}, {})
         }
     }
 }

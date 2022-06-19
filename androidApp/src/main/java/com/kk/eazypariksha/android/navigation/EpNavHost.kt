@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kk.eazypariksha.android.addexam.AddExamScreen
+import com.kk.eazypariksha.android.addquestion.AddQuestionScreen
 import com.kk.eazypariksha.android.home.HomeScreen
 import com.kk.eazypariksha.android.util.stateHolder
 import com.kk.eazypariksha.stateholder.StateHolderFactory
@@ -38,6 +39,16 @@ object EpRoute {
         object AddExam : Destination {
             override val parent = Home
             override val route = "addExam"
+
+            object ExamScreen : Destination {
+                override val parent = AddExam
+                override val route = "exam"
+            }
+
+            object QuestionScreen : Destination {
+                override val parent = ExamScreen
+                override val route = "question"
+            }
         }
     }
 
@@ -66,13 +77,33 @@ fun EpNavHost(
             SideEffect { setAppTitle(StringConstant.easyPariksha) }
             HomeScreen { navController.navigate(it) }
         }
-        destComposable(EpRoute.Home.AddExam) { backStackEntry ->
-            SideEffect { setAppTitle(StringConstant.addExam) }
-            val stateHolder = stateHolderStore.stateHolder(backStackEntry) { scope ->
-                StateHolderFactory.provideAddExamStateHolder(scope)
+        navigation(
+            startDestination = EpRoute.Home.AddExam.ExamScreen.absoluteRoute,
+            route = EpRoute.Home.AddExam.absoluteRoute
+        ) {
+            val stateHolderKey = EpRoute.Home.AddExam.absoluteRoute
+            destComposable(EpRoute.Home.AddExam.ExamScreen) {
+                SideEffect { setAppTitle(StringConstant.addExam) }
+                val stateHolder = stateHolderStore.stateHolder(stateHolderKey) { scope ->
+                    StateHolderFactory.provideAddExamStateHolder(scope)
+                }
+                AddExamScreen(scaffoldState, stateHolder, navController::navigateUp) {
+                    navController.navigate(EpRoute.Home.AddExam.QuestionScreen)
+                }
             }
-            AddExamScreen(scaffoldState, stateHolder, navController::navigateUp)
+            destComposable(EpRoute.Home.AddExam.QuestionScreen) {
+                SideEffect { setAppTitle(StringConstant.addQuestion) }
+                val stateHolder = stateHolderStore.stateHolder(stateHolderKey) { scope ->
+                    StateHolderFactory.provideAddExamStateHolder(scope)
+                }
+                AddQuestionScreen(
+                    stateHolder = stateHolder,
+                    navigateUp = navController::navigateUp,
+                    onNext = { }
+                )
+            }
         }
+
     }
 }
 

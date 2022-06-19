@@ -10,4 +10,5 @@ object StringConstant {
     const val subjectNotSelected = "Please select the subject"
     const val dateTimeNotSet = "Please select the date & time"
     const val draftSaved = "Draft Saved!"
+    const val addQuestion = "Add Question"
 }
